@@ -23,15 +23,11 @@
 
 import React from 'react';
 import './App.css';
-
 import logo from './logo.svg';
 
-import BlocklyComponent, { Block, Value, Field, Shadow } from './Blockly';
-
-import BlocklyJS from 'blockly/javascript';
-
-import './blocks/customblocks';
-import './generator/generator';
+import {BlocklyComponent, BlocklyJS, Block, Value, Category, Field, Shadow } from './salih-blockly';
+import './salih-blockly/blocks/customblocks';
+import './salih-blockly/generator/generator';
 
 class App extends React.Component {
   constructor(props) {
@@ -49,8 +45,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+        
+          
           <button onClick={this.generateCode}>Convert</button>
           <BlocklyComponent ref={this.simpleWorkspace}
           readOnly={false} trashcan={true} media={'media/'}
@@ -64,9 +60,12 @@ class App extends React.Component {
 <block type="controls_ifelse" x="0" y="0"></block>
 </xml>
       `}>
+        <Category name="Test Category" colour="210">
             <Block type="test_react_field" />
             <Block type="test_react_date_field" />
             <Block type="controls_ifelse" />
+        </Category>
+        <Category name="Second Catgeory" colour="150">
             <Block type="logic_compare" />
             <Block type="logic_operation" />
             <Block type="controls_repeat_ext">
@@ -88,8 +87,9 @@ class App extends React.Component {
                 </Block>
               </Value>
             </Block>
+            </Category>
           </BlocklyComponent>
-        </header>
+       
       </div>
     );
   }
