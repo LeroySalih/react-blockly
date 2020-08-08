@@ -24,75 +24,59 @@
 import React from 'react';
 import './App.css';
 import logo from './logo.svg';
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 
-import {BlocklyComponent, BlocklyJS, Block, Value, Category, Field, Shadow } from './salih-blockly';
-import './salih-blockly/blocks/customblocks';
-import './salih-blockly/generator/generator';
+import SketchPage from './pages/sketch.page';
+
+import styled from 'styled-components';
+
 
 class App extends React.Component {
+
+  initialXml = '<xml xmlns="https://developers.google.com/blockly/xml"><variables><variable id="cFou2T#bz1.VWVTcIu%x">x</variable></variables><block type="p5_setup" id="rMdb?$_l5_hf6UKDeY7@" x="163" y="48"><statement name="statements"><block type="p5_create_canvas" id="6]@$Oy{R!;4=dM.ltJZK"><value name="width"><block type="math_number" id="tyalS*Jld+=^x!K|~HGp"><field name="NUM">200</field></block></value><value name="height"><block type="math_number" id="Zv*:FT]=Mqx!.?f[nVI6"><field name="NUM">200</field></block></value><next><block type="p5_background" id="w~|)+=MU}|YJ`;Wcd6@^"><value name="NAME"><block type="colour_picker" id="/hwd7uxDkH2CZW/JCg_w"><field name="COLOUR">#ff0000</field></block></value><next><block type="variables_set" id="@gMQv9_u@:m,|rq^x@hc"><field name="VAR" id="cFou2T#bz1.VWVTcIu%x">x</field><value name="VALUE"><block type="math_number" id="w8`;g5+e:w@j+~m.2i^5"><field name="NUM">0</field></block></value><next><block type="controls_repeat_ext" id="{lPkERx$9x`cjj]~5YEN"><value name="TIMES"><shadow type="math_number" id="hgt^Ubdu@MKU8w(haW^*"><field name="NUM">10</field></shadow></value><statement name="DO"><block type="p5_point" id="(2sI}k+{T{:$?Q/:+?})"><value name="x"><block type="math_number" id="2H/MW2;,]{:rf!sunPN{"><field name="NUM">50</field></block></value><value name="y"><block type="math_number" id="fd[`{w%DvA[T_7dA+2b;"><field name="NUM">50</field></block></value></block></statement></block></next></block></next></block></next></block></statement></block></xml>';
+
   constructor(props) {
     super(props);
-    this.simpleWorkspace = React.createRef();
+    
+    this.state = {
+      initialXml: this.initialXml, 
+    };
+    
   }
 
-  generateCode = () => {
-    var code = BlocklyJS.workspaceToCode(
-      this.simpleWorkspace.current.workspace
-    );
-    console.log(code);
+  
+
+  componentDidMount() {
+  //  this.runCode();
   }
 
   render() {
     return (
       <div className="App">
         
-          
-          <button onClick={this.generateCode}>Convert</button>
-          <BlocklyComponent ref={this.simpleWorkspace}
-          readOnly={false} trashcan={true} media={'media/'}
-          move={{
-            scrollbars: true,
-            drag: true,
-            wheel: true
-          }}
-          initialXml={`
-<xml xmlns="http://www.w3.org/1999/xhtml">
-<block type="controls_ifelse" x="0" y="0"></block>
-</xml>
-      `}>
-        <Category name="Test Category" colour="210">
-            <Block type="test_react_field" />
-            <Block type="test_react_date_field" />
-            <Block type="controls_ifelse" />
-        </Category>
-        <Category name="Second Catgeory" colour="150">
-            <Block type="logic_compare" />
-            <Block type="logic_operation" />
-            <Block type="controls_repeat_ext">
-              <Value name="TIMES">
-                <Shadow type="math_number">
-                  <Field name="NUM">10</Field>
-                </Shadow>
-              </Value>
-            </Block>
-            <Block type="logic_operation" />
-            <Block type="logic_negate" />
-            <Block type="logic_boolean" />
-            <Block type="logic_null" disabled="true" />
-            <Block type="logic_ternary" />
-            <Block type="text_charAt">
-              <Value name="VALUE">
-                <Block type="variables_get">
-                  <Field name="VAR">text</Field>
-                </Block>
-              </Value>
-            </Block>
-            </Category>
-          </BlocklyComponent>
-       
+        <Router>
+          <div>
+            <Link to="/">Home</Link>
+            <Link to="/sketch">Sketch</Link>
+
+          </div>
+          <Switch>
+            <Route path="/" exact>
+              <LandingPage />
+            </Route>
+
+            <Route path="/sketch">
+              <SketchPage initalXml={this.state.initialXml} />
+            </Route>
+          </Switch>
+        </Router>
       </div>
     );
   }
+}
+
+const LandingPage = () => {
+  return (<div>Landing Page...</div>)
 }
 
 export default App;

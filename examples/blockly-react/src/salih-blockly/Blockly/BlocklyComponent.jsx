@@ -43,6 +43,14 @@ class BlocklyComponent extends React.Component {
             this.blocklyDiv.current,
             {
                 toolbox: this.toolbox.current,
+                zoom:
+                        {controls: true,
+                        wheel: true,
+                        startScale: 1.0,
+                        maxScale: 3,
+                        minScale: 0.3,
+                        scaleSpeed: 1.2,
+                        pinch: true},
                 ...rest
             },
         );
